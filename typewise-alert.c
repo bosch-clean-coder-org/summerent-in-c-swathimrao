@@ -32,6 +32,16 @@ BreachType classifyTemperatureBreach(
   return inferBreach(temperatureInC, lowerLimit, upperLimit);
 }
 
+void sendAlert(AlertTarget alertTarget, BreachType breachType)//dont foget to declare
+{
+  if (alertTarget == TO_CONTROLLER)
+    sendToController(breachType);
+    
+  if (alertTarget == TO_EMAIL)
+    sendToEmail(breachType);
+  
+}
+
 void checkAndAlert(
     AlertTarget alertTarget, BatteryCharacter batteryChar, double temperatureInC) {
 
@@ -47,10 +57,13 @@ void checkAndAlert(
   //     sendToEmail(breachType);
   //     break;
   // }
-  if (alertTarget == TO_CONTROLLER)
-    sendToController(breachType);
-  if (alertTarget == TO_EMAIL)
-    sendToEmail(breachType);
+  // if (alertTarget == TO_CONTROLLER)
+  //   sendToController(breachType);
+  // if (alertTarget == TO_EMAIL)
+  //   sendToEmail(breachType);
+
+    sendAlert(alertTarget, breachType);
+
 }
 
 void sendToController(BreachType breachType) {
