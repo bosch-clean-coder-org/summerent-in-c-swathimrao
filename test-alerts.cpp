@@ -24,7 +24,7 @@ TEST_CASE("sendToController")
     std::cout.rdbuf(originalOutputBuffer);
 
     std::string output = outputStream.str();
-    std::string expectedOutput = "feed : TOO_LOW\n";
+    std::string expectedOutput = "feed : 1\n";
     //expectedOutput << std::hex << expectedHeader << " : " << std::hex << breachType << "\n";
 
     REQUIRE(output == expectedOutput);
@@ -33,8 +33,10 @@ TEST_CASE("sendToController")
 TEST_CASE("sendToEmail") 
 {
   BreachType breachType = TOO_LOW;
-  const char* expectedRecipient = "a.b@c.com";
-  const char* expectedMessage = "Hi, the temperature is too low\n";
+  // const char* expectedRecipient = "a.b@c.com";
+  // const char* expectedMessage = "Hi, the temperature is too low\n";
+
+  std::string expectedOutput = "To: a.b@c.com\nHi, the temperature is too low\n";
 
   std::stringstream outputStream;
   std::streambuf* originalOutputBuffer = std::cout.rdbuf();
@@ -45,8 +47,7 @@ TEST_CASE("sendToEmail")
 
   std::string output = outputStream.str();
 
-  REQUIRE(output.find(expectedRecipient) != std::string::npos);
-  REQUIRE(output.find(expectedMessage) != std::string::npos);
+  REQUIRE(output == expectedOutput);
 }
 
 
