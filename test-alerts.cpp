@@ -9,26 +9,44 @@ TEST_CASE("infers the breach according to limits") {
   REQUIRE(inferBreach(25, 20, 30) == NORMAL);
 }
 
-TEST_CASE("sendToController - Prints the correct header and BreachType") {
+
+TEST_CASE("sendToController) 
+{
   BreachType breachType = TOO_LOW;
   const unsigned short expectedHeader = 0xfeed;
 
-  std::string output = sendToController(breachType);
+  std::stringstream outputStream;
+  std::streambuf* originalOutputBuffer = std::cout.rdbuf();
+  std::cout.rdbuf(outputStream.rdbuf());
 
-  std::ostringstream expectedOutput;
+  sendToController(breachType);
+
+  std::cout.rdbuf(originalOutputBuffer);
+
+  std::string output = outputStream.str();
+  std::stringstream expectedOutput;
   expectedOutput << std::hex << expectedHeader << " : " << std::hex << breachType << "\n";
 
   REQUIRE(output == expectedOutput.str());
 }
 
-TEST_CASE("sendToEmail - Prints the correct recipient and message based on BreachType") {
+TEST_CASE("sendToEmail") 
+{
   BreachType breachType = TOO_LOW;
   const char* expectedRecipient = "a.b@c.com";
   const char* expectedMessage = "Hi, the temperature is too low\n";
 
-  std::string output = sendToEmail(breachType);
+  std::stringstream outputStream;
+  std::streambuf* originalOutputBuffer = std::cout.rdbuf();
+  std::cout.rdbuf(outputStream.rdbuf());
+
+  sendToEmail(breachType);
+  std::cout.rdbuf(originalOutputBuffer);
+
+  std::string output = outputStream.str();
 
   REQUIRE(output.find(expectedRecipient) != std::string::npos);
   REQUIRE(output.find(expectedMessage) != std::string::npos);
 }
+
 
