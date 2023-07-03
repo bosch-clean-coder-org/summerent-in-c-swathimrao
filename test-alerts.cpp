@@ -10,7 +10,7 @@ TEST_CASE("infers the breach according to limits") {
 }
 
 
-TEST_CASE("sendToController) 
+TEST_CASE("sendToController") 
 {
   BreachType breachType = TOO_LOW;
   const unsigned short expectedHeader = 0xfeed;
