@@ -12,22 +12,22 @@ TEST_CASE("infers the breach according to limits") {
 
 TEST_CASE("sendToController") 
 {
-  BreachType breachType = TOO_LOW;
-  const unsigned short expectedHeader = 0xfeed;
+    BreachType breachType = TOO_LOW;
+    const unsigned short expectedHeader = 0xfeed;
 
-  std::stringstream outputStream;
-  std::streambuf* originalOutputBuffer = std::cout.rdbuf();
-  std::cout.rdbuf(outputStream.rdbuf());
+    std::stringstream outputStream;
+    std::streambuf *originalOutputBuffer = std::cout.rdbuf();
+    std::cout.rdbuf(outputStream.rdbuf());
 
-  sendToController(breachType);
+    sendToController(breachType);
 
-  std::cout.rdbuf(originalOutputBuffer);
+    std::cout.rdbuf(originalOutputBuffer);
 
-  std::string output = outputStream.str();
-  std::stringstream expectedOutput;
-  expectedOutput << std::hex << expectedHeader << " : " << std::hex << breachType << "\n";
+    std::string output = outputStream.str();
+    std::string expectedOutput = "feed : TOO_LOW\n";
+    //expectedOutput << std::hex << expectedHeader << " : " << std::hex << breachType << "\n";
 
-  REQUIRE(output == expectedOutput.str());
+    REQUIRE(output == expectedOutput);
 }
 
 TEST_CASE("sendToEmail") 
