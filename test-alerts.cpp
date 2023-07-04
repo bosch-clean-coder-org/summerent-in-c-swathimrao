@@ -2,10 +2,10 @@
 
 #include <iostream>
 #include <sstream>
-#include <catch2/catch.hpp>
+#include "test/catch.hpp"
+#include "typewise-alert.h"
 #include <algorithm>
 #include <cctype>
-#include "typewise-alert.h"
 
 TEST_CASE("infers the breach according to limits") {
   REQUIRE(inferBreach(12, 20, 30) == TOO_LOW);
