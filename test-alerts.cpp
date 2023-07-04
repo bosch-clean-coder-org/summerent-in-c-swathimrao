@@ -6,6 +6,7 @@
 #include "typewise-alert.h"
 // #include <algorithm>
 #include "cctype"
+#include "cstring"
 
 TEST_CASE("infers the breach according to limits") {
   REQUIRE(inferBreach(12, 20, 30) == TOO_LOW);
@@ -24,7 +25,7 @@ TEST_CASE("sendToController")
     std::cout.rdbuf(originalOutputBuffer);
     std::string output = outputStream.str();
     std::string expectedOutput = "feed : 1\n";
-    REQUIRE(std::toLowercase(output) == std::toLowercase(expectedOutput));
+    REQUIRE(tolower(output) == tolower(expectedOutput));
 
     // breachType = TOO_HIGH;
     // expectedOutput = "feed : 2\n";
@@ -45,7 +46,7 @@ TEST_CASE("sendToEmail")
   sendToEmail(breachType);
   std::cout.rdbuf(originalOutputBuffer);
   std::string output = outputStream.str();
-  REQUIRE(std::toLowercase(output) == std::toLowercase(expectedOutput));
+  REQUIRE(tolower(output) == tolower(expectedOutput));
   
 
   // breachType = TOO_LOW;
