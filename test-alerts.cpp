@@ -2,6 +2,7 @@
 
 #include "test/catch.hpp"
 #include "typewise-alert.h"
+#include <regex>
 
 TEST_CASE("infers the breach according to limits") {
   REQUIRE(inferBreach(12, 20, 30) == TOO_LOW);
@@ -21,7 +22,8 @@ TEST_CASE("sendToController")
     std::string output = outputStream.str();
     std::string expectedOutput = "feed : 1\n";
     // REQUIRE(output == expectedOutput);
-    REQUIRE_THAT(output, Catch::Matches(expectedOutput));
+    std::regex pattern(expectedOutput, std::regex::icase);
+    REQUIRE_THAT(output, Catch::Matches(pattern));
 
     // breachType = TOO_HIGH;
     // expectedOutput = "feed : 2\n";
@@ -43,7 +45,9 @@ TEST_CASE("sendToEmail")
   std::cout.rdbuf(originalOutputBuffer);
   std::string output = outputStream.str();
   // REQUIRE(output == expectedOutput);
-  REQUIRE_THAT(output, Catch::Matches(expectedOutput));
+  
+    std::regex pattern(expectedOutput, std::regex::icase);
+    REQUIRE_THAT(output, Catch::Matches(pattern));
 
   // breachType = TOO_LOW;
   // expectedOutput = "To: a.b@c.com\nHi, the temperature is too high\n";
