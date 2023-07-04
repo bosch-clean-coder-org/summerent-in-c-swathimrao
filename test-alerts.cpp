@@ -20,7 +20,7 @@ TEST_CASE("sendToController")
     std::cout.rdbuf(originalOutputBuffer);
     std::string output = outputStream.str();
     std::string expectedOutput = "feed : 1\n";
-    REQUIRE(output == expectedOutput);
+    REQUIRE_THAT(output == expectedOutput);
 
     // breachType = TOO_HIGH;
     // expectedOutput = "feed : 2\n";
@@ -41,7 +41,7 @@ TEST_CASE("sendToEmail")
   sendToEmail(breachType);
   std::cout.rdbuf(originalOutputBuffer);
   std::string output = outputStream.str();
-  REQUIRE(output == expectedOutput);
+  REQUIRE_THAT(output == expectedOutput);
 
   // breachType = TOO_LOW;
   // expectedOutput = "To: a.b@c.com\nHi, the temperature is too high\n";
