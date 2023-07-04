@@ -1,12 +1,17 @@
 #define CATCH_CONFIG_MAIN  // This tells Catch to provide a main() - only do this in one cpp file
 
-// #include <iostream>
-// #include <sstream>
+#include <iostream>
+#include <sstream>
 #include "test/catch.hpp"
 #include "typewise-alert.h"
-// #include <algorithm>
+#include <algorithm>
 #include "cctype"
-#include "cstring"
+// #include "cstring"
+
+std::string toLowercase(std::string str) {
+  std::transform(str.begin(), str.end(), str.begin(), [](unsigned char c) { return std::tolower(c); });
+  return str;
+}
 
 TEST_CASE("infers the breach according to limits") {
   REQUIRE(inferBreach(12, 20, 30) == TOO_LOW);
@@ -25,7 +30,7 @@ TEST_CASE("sendToController")
     std::cout.rdbuf(originalOutputBuffer);
     std::string output = outputStream.str();
     std::string expectedOutput = "feed : 1\n";
-    REQUIRE(tolower(output) == tolower(expectedOutput));
+    REQUIRE(toLowercase(output) == toLowercase(expectedOutput));
 
     // breachType = TOO_HIGH;
     // expectedOutput = "feed : 2\n";
@@ -46,7 +51,7 @@ TEST_CASE("sendToEmail")
   sendToEmail(breachType);
   std::cout.rdbuf(originalOutputBuffer);
   std::string output = outputStream.str();
-  REQUIRE(tolower(output) == tolower(expectedOutput));
+  REQUIRE(toLowercase(output) == toLowercase(expectedOutput));
   
 
   // breachType = TOO_LOW;
