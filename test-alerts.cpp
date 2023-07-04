@@ -24,7 +24,7 @@ TEST_CASE("sendToController")
     std::cout.rdbuf(originalOutputBuffer);
     std::string output = outputStream.str();
     std::string expectedOutput = "feed : 1\n";
-    REQUIRE(toLowercase(output) == toLowercase(expectedOutput));
+    REQUIRE(std::toLowercase(output) == std::toLowercase(expectedOutput));
 
     // breachType = TOO_HIGH;
     // expectedOutput = "feed : 2\n";
@@ -45,7 +45,7 @@ TEST_CASE("sendToEmail")
   sendToEmail(breachType);
   std::cout.rdbuf(originalOutputBuffer);
   std::string output = outputStream.str();
-  REQUIRE(toLowercase(output) == toLowercase(expectedOutput));
+  REQUIRE(std::toLowercase(output) == std::toLowercase(expectedOutput));
   
 
   // breachType = TOO_LOW;
